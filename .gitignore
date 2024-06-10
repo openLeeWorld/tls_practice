@@ -1,0 +1,46 @@
+build
+.vscode
+server-cert.pem
+cert.pem
+key.pem
+ec_cert.pem
+ec_key.pem
+
+!/.gitignore
+core
+*.x
+*~
+*.swp
+*.swo
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+*.vim
+obj/catch.tx
+*.db
+*.log

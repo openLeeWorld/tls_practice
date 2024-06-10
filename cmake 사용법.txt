@@ -1,0 +1,2 @@
+build 폴더에서 cmake ..
+cmake -- build .

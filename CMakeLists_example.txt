@@ -1,0 +1,40 @@
+cmake_minimum_required(VERSION 3.11)
+project(ECDSA_Test)
+
+set(CMAKE_CXX_STANDARD 17)
+
+# GMP 라이브러리 경로 수동 설정
+set(GMP_INCLUDE_DIR "/usr/include") # GMP 헤더 파일 경로
+set(GMP_LIBRARY_1 "/usr/lib/x86_64-linux-gnu/libgmp.so") # GMP 라이브러리 파일 경로
+set(GMP_LIBRARY_2 "/usr/lib/x86_64-linux-gnu/libgmpxx.so") # GMP 라이브러리 파일 경로
+
+# openSSL 
+find_package(OpenSSL REQUIRED) 
+
+# Include directories 추가
+include_directories(${GMP_INCLUDE_DIR})
+
+# Nettle 라이브러리 링크
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(NETTLE nettle)
+
+# nettle 라이브러리 경로 수동 설정
+set(NETTLE_LIBRARIES "/usr/lib/x86_64-linux-gnu/libnettle.so") # nettle 라이브러리 파일 경로
+
+include_directories(${NETTLE_INCLUDE_DIRS})
+target_link_libraries(MyProgram ${NETTLE_LIBRARIES})
+
+# Catch2 추가
+include(FetchContent)
+FetchContent_Declare(
+  catch2
+  GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+  GIT_TAG v3.3.2  # 또는 최신 릴리즈 버전을 사용하세요
+)
+FetchContent_MakeAvailable(catch2)
+
+# 소스 파일 추가
+add_executable(tests test_GCM.cpp GCM.cpp AES.cpp mpz_utility.cpp)
+
+# Catch2 링크
+target_link_libraries(tests PRIVATE ${GMP_LIBRARY_1} ${GMP_LIBRARY_2} ${NETTLE_LIBRARIES} Catch2::Catch2WithMain OpenSSL::SSL OpenSSL::Crypto)
